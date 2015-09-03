@@ -1,0 +1,3 @@
+module Crawlable
+
+end
