@@ -1,4 +1,5 @@
 require "zanobo_rails/engine"
+require "zanobo_rails/crawlable"
 
 module ZanoboRails
   class << self
@@ -11,8 +12,9 @@ module ZanoboRails
   end
 
   class Configuration
-    attr_accessor :config_option_1,
-                  :config_option_2
+    attr_accessor :canonical_protocol,
+                  :canonical_domain,
+
 
     def initialize
       @zanobo_some_instance_variable = true

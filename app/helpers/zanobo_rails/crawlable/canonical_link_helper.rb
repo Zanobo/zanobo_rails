@@ -1,11 +1,11 @@
-module Crawlable::CanonicalLinkHelper
+module ZanoboRails::Crawlable::CanonicalLinkHelper
   def canonical_root
-    CRAWLER_SETTINGS[:CANONICAL_PROTOCOL] + '://' + CRAWLER_SETTINGS[:CANONICAL_DOMAIN]
+    ZanoboRails::Crawlable.configuration.canonical_protocol + '://' + ZanoboRails::Crawlable.configuration.canonical_domain
   end
 
   def canonicalize(url)
     url.gsub( /\A(?:(?:https?:\/\/|\/\/)?[^\/]*)(\/.*)\z/,
-              CRAWLER_SETTINGS[:CANONICAL_PROTOCOL] + '://' + CRAWLER_SETTINGS[:CANONICAL_DOMAIN] + '\1'
+              ZanoboRails::Crawlable.configuration.canonical_protocol + '://' + ZanoboRails::Crawlable.configuration.canonical_domain + '\1'
     )
   end
 

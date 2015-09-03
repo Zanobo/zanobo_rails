@@ -1,17 +1,22 @@
-module Crawlable::ServesMetatags
+module ZanoboRails::Crawlable::ServesMetatags
   extend ActiveSupport::Concern
 
   # https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
+  #
   # Many ways to use this:
-  # You could set meta tags in controller or view with set_meta_tags
-  # :this => value, each manually, for most control
-  # If you have simplified your metatag values to the inputs for prepare, you
-  # can prepare_meta_tags :simpler => value
-  # If you move this hash to your model under meta_tag_hash,
-  # you can meta_tags_for @object
-  # Finally, if all your meta tags are stored with correct simplified names
-  # and properties, you can do that without
-  #  putting anything in your model besides your meta_tag association
+  #
+  # * You could set meta tags in controller or view with
+  #     set_meta_tags :this => value, each manually, for most control
+  #
+  # * If you have simplified your metatag values to the inputs for prepare, you
+  #   can prepare_meta_tags :simpler => value
+  #
+  # * If you move this hash to your model under meta_tag_hash, you can
+  #     meta_tags_for @object
+  #
+  # * Finally, if all your meta tags are stored with correct simplified names
+  #   and properties, you can do that without putting anything in your model
+  #   besides your meta_tag association
 
 =begin
   @todo Include tags, publish time, modify time
@@ -112,7 +117,6 @@ module Crawlable::ServesMetatags
       if options[:url].blank?
         raise MetaTagError, 'No url defined for content, required by OG and needed if protocol different from canonical'
       end
-
 
       # initialize return array
       return_values = {

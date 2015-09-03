@@ -1,4 +1,4 @@
-module Crawlable::SocialSharingHelper
+module ZanoboRails::Crawlable::SocialSharingHelper
 
   # Retrive the share url for a model, taking into account its class legacy url rules and possible custom routing
   # @todo Abstract social share URL definition from document

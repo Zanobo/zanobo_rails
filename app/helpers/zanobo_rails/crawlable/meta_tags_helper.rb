@@ -1,4 +1,7 @@
-module Crawlable::MetaTagsHelper
+require 'meta-tags'
+
+module ZanoboRails::Crawlable::MetaTagsHelper
+
   # application_meta_tags
   # Brings together all the meta tags you might need, for inclusion in your layout
   def application_meta_tags
@@ -7,12 +10,10 @@ module Crawlable::MetaTagsHelper
     # These include the content encoding = UTF-8 tag, which is helpful to have first in a few rare occasions
     tags << boiler_plate_meta_tags
 
-    # Pass the favicon links in early so the image loading can start
-    tags << favicon_tags
-
     # Pass regular tags to the meta-tags gem (only works for meta name=, content= )
     set_site_meta_tags
     set_locale_meta_tags
+
     # content meta tags are set in view or controller using concerns/crawlable/serves_metatags#set_meta_tags_for,
     #  then aggregated with the above set_ commands and displayed by display_meta_tags
     tags << display_meta_tags
@@ -38,28 +39,36 @@ module Crawlable::MetaTagsHelper
 
   # Identify site to social services
   def set_site_meta_tags
-    set_meta_tags( publisher:
-                     (CRAWLER_SETTINGS[:GPLUS_ID] ? "https://plus.google.com/#{CRAWLER_SETTINGS[:GPLUS_ID]}" : nil),
-                   twitter: {site:
-                     (CRAWLER_SETTINGS[:TWITTER_ID] ? "@#{CRAWLER_SETTINGS[:TWITTER_ID]}" : nil )},
-                   fb: {app_id:
-                     CRAWLER_SETTINGS[:FB_APP_ID]},
-                   open_graph: { :site_name => CRAWLER_SETTINGS[:SITE_NAME] },
-                   separator:
-                     CRAWLER_SETTINGS[:PAGE_TITLE_SITENAME_SEPARATOR],
-                   reverse:
-                     (CRAWLER_SETTINGS[:PAGE_TITLE_SITENAME_POS] == 'right'),
-                   site: CRAWLER_SETTINGS[:SITE_NAME],
-    )
+    config = ZanoboRails::Crawlable.configuration
+
+    site_ids = {
+      separator: config.page_title_sitename_separator,
+      reverse: config.page_title_sitename_pos == 'right'
+    }
+
+    if config.gplus_id.present?
+      site_ids[:publisher] = "https://plus.google.com/#{config.gplus_id}"
+    end
+    if config.twitter_id.present?
+      site_ids[:twitter] = "@#{config.twitter_id}"
+    end
+    if config.fb_app_id.present?
+      site_ids[:fb] = { app_id: "@#{config.fb_app_id}" }
+    end
+    if config.site_name.present?
+      site_ids[:open_graph] = { site_name: config.site_name }
+      site_ids[:site] = config.site_name
+    end
+
+    set_meta_tags(site_ids)
   end
 
   # Give info on current locale and other options
   def set_locale_meta_tags
-    set_meta_tags(og: {locale: t('locale.short-code')}
-                  # @todo When we support multiple locales, pull them in below
-                  #alternate: { "fr" => "http://yoursite.fr/alternate/url",
-                  #             "de" => "http://yoursite.de/alternate/url" }
-    )
+    set_meta_tags(og: {locale: t('locale.short-code', default: 'en_US')} )
+    # @todo When we support multiple locales, pull them in below
+    #alternate: { "fr" => "http://yoursite.fr/alternate/url",
+    #             "de" => "http://yoursite.de/alternate/url" }
   end
 
 end

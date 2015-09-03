@@ -1,4 +1,4 @@
-module VideoHelper
+module ZanoboRails::Contentful::VideoHelper
 
   def contentful_videojs_tag(asset, width = nil)
 
