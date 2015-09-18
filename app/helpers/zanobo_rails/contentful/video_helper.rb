@@ -1,6 +1,11 @@
 module ZanoboRails::Contentful::VideoHelper
 
-  def contentful_videojs_tag(asset, width = nil)
+  def contentful_videojs_tag(asset, options = {})
+    defaults = {
+        class: ''
+    }
+
+    options.reverse_merge! defaults
 
     if !asset or !asset.file or
       !(content_type = asset.file.content_type) or
@@ -15,9 +20,11 @@ module ZanoboRails::Contentful::VideoHelper
       key = :mp4
     else
       return
-      end
+    end
 
-    return videojs_rails sources: { key => url }, width: width do
+    options[:sources] = {key => url}
+
+    return videojs_rails options do
           'Please enable <b>JavaScript</b> to see this content.'
     end.html_safe
 
