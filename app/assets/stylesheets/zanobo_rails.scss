@@ -1,0 +1,7 @@
+@import "bootstrap-sprockets"; // bootstrap glyphicons, must come before bootstrap
+@import "bootstrap";
+
+@import "zanobo_rails/mixins/respond_to";
+@import "zanobo_rails/mixins/responsive_embed";
+
+@import "zanobo_rails/partials/boxes";

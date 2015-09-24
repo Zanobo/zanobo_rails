@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zanobo_rails (0.0.1)
+    zanobo_rails (0.0.3)
       meta-tags
       rails (>= 4.1.8)
 
@@ -91,7 +91,7 @@ GEM
     rake (10.4.2)
     sprockets (3.3.4)
       rack (~> 1.0)
-    sprockets-rails (2.3.2)
+    sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)

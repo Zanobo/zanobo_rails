@@ -1,0 +1,35 @@
+$height-ratio-16x9: 56.25%;
+$height-ratio-16x4: 25.75%;
+
+.ar-box-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  //background-color: blue;
+
+  .ar-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    //background-color: orange;
+  }
+
+  &.ar16x9 {
+    padding-bottom: $height-ratio-16x9;
+  }
+
+  &.ar16x4 {
+    padding-bottom: $height-ratio-16x4;
+  }
+
+  &.ar16x4-sm {
+    @include respond-to(sm+md+lg) {
+      padding-bottom: $height-ratio-16x4;
+    }
+  }
+
+
+
+
+}
+

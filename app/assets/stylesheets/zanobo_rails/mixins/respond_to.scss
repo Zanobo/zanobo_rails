@@ -1,0 +1,41 @@
+@mixin respond-to($media) {
+  @if $media == lg {
+    @media only screen and (min-width: $screen-lg-min) { @content; }
+  }
+  @else if $media == not-lg {
+    @media only screen and (max-width: $screen-md-max) { @content; }
+  }
+  @else if $media == md {
+    @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) { @content; }
+  }
+  @else if $media == md+lg {
+    @media only screen and (min-width: $screen-md-min) { @content; }
+  }
+  @else if $media == sm {
+    @media only screen and (min-width: $screen-sm-min)  and (max-width: $screen-sm-max) { @content; }
+  }
+  @else if $media == sm+md+lg {
+    @media only screen and (min-width: $screen-sm-min) { @content; }
+  }
+  @else if $media == ty+xs+sm or $media == mobile {
+    @media only screen and (max-width: $screen-sm-max) { @content; }
+  }
+  @else if $media == xs+sm {
+    @media only screen and (min-width: $screen-xs-min ) and (max-width: $screen-sm-max ) { @content; }
+  }
+  @else if $media == xs {
+    @media only screen and (min-width: $screen-xs-min ) and (max-width: $screen-xs-max) { @content; }
+  }
+  @else if $media == ty+xs {
+    @media only screen and (max-width: $screen-xs-max) { @content; }
+  }
+  @else if $media == not-ty {
+    @media only screen and (min-width: $screen-xs-min ) { @content; }
+  }
+  @else if $media == ty {
+    @media only screen and (max-width: $screen-ty-max) { @content; }
+  }
+  @else {
+    @error "Undefined respond size"
+  }
+}

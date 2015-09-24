@@ -1,0 +1,41 @@
+<% if items.present? and items.count > 0 and item_partial.present? %>
+
+    <%
+       @carousel_incremental_id ||= 0
+       @carousel_incremental_id += 1
+       carousel_id = "carousel-#{@carousel_incremental_id}"
+    %>
+
+    <div id="<%= carousel_id %>" class="carousel slide" data-ride="carousel">
+
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <% items.each_with_index do |item, i| %>
+            <% active_class  = i == 0 ? 'active' : '' %>
+            <li data-target="<%= carousel_id %>" data-slide-to="<%= i %>" class="<%= active_class %>"></li>
+        <% end %>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <% items.each_with_index do |item, i| %>
+            <% active_class  = i == 0 ? 'active' : '' %>
+            <% even_class  = (i + 1).even? ? 'even' : 'odd' %>
+            <div class="item <%= active_class + ' ' + even_class %>">
+              <%= render partial: item_partial, locals: { item: item, i: i }%>
+            </div>
+        <% end %>
+
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#<%= carousel_id %>" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#<%= carousel_id %>" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+<% end %>

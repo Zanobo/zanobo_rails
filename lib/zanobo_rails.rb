@@ -1,5 +1,6 @@
 require "zanobo_rails/engine"
 require "zanobo_rails/crawlable"
+require "zanobo_rails/caching"
 
 module ZanoboRails
   class << self
