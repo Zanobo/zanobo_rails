@@ -4,7 +4,7 @@ module ZanoboRails::Crawlable
   end
 
   def self.configure
-    Rails.logger.info("running Crawlable configure")
+    #Rails.logger.info("running Crawlable configure")
     self.configuration ||= Configuration.new
     yield(configuration)
   end

@@ -21,7 +21,7 @@ module ZanoboRails::Caching
     end
 
     def configure
-      Rails.logger.info("running Caching configure")
+      #Rails.logger.info("running Caching configure")
       yield(configuration)
     end
 

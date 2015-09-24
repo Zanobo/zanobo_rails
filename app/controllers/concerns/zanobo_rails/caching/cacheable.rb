@@ -14,17 +14,8 @@ module ZanoboRails::Caching::Cacheable
       @cache_modified_times.max
     end
 
-    def modified_with(records)
-      records_modified_at = records.map(&:updated_at).compact
-      #records_cache_keys = records.map(&:cache_key).compact
-=begin
-      records_modified_at = records.map do |r|
-        Rails.logger.info("record is #{r.class.name}")
-        Rails.logger.info("updated is #{r.updated_at}")
-        r.updated_at
-      end.compact
-=end
-      @cache_modified_times += records_modified_at
+    def modified_with(*records)
+      @cache_modified_times += records.flatten.compact.map(&:updated_at).compact
 
       # I THINK having last_modified in the cache key should be sufficient
       #@cache_key_parts += records_cache_keys
@@ -37,7 +28,7 @@ module ZanoboRails::Caching::Cacheable
 
     def app_version_etag
       ZanoboRails::Caching.app_version_etag
-      Rails.logger.info("getting app_Version_etag")
+      #Rails.logger.info("getting app_Version_etag")
     end
 
     def cache_key_parts

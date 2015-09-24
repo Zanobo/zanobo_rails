@@ -14,3 +14,22 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+#
+# = Asset compilation
+#
+# Note the "staging" env used to keep asset comp gems out of memory
+#
+group :development, :test, :staging do
+
+  # Stylesheet Assets
+  gem 'sass-rails', '~> 5.0'          # Sass compiler
+  gem 'bootstrap-sass', '~> 3.3.3'
+  gem 'font-awesome-rails'            # FA icons
+
+  # Javascript Assets
+  gem 'coffee-script-source', '1.8.0' # normally 1.9 loaded by coffee-rails, but fixes regression error https://github.com/josh/ruby-coffee-script/issues/31
+  gem 'coffee-rails', '~> 4.1.0'      # CoffeeScript compiler
+
+end
