@@ -1,4 +1,15 @@
-<% if items.present? and items.count > 0 and item_partial.present? %>
+<%
+
+   rendered_items ||= []
+   items ||= []
+   item_partial ||= nil
+
+   if rendered_items.present? or
+    (items.present? and items.count > 0 and item_partial.present?)
+
+     item_count = items.count
+     rendered_count = rendered_items.count
+%>
 
     <%
        @carousel_incremental_id ||= 0
@@ -10,7 +21,7 @@
 
       <!-- Indicators -->
       <ol class="carousel-indicators">
-        <% items.each_with_index do |item, i| %>
+        <% (0..(rendered_count + item_count - 1)).each do |i| %>
             <% active_class  = i == 0 ? 'active' : '' %>
             <li data-target="<%= carousel_id %>" data-slide-to="<%= i %>" class="<%= active_class %>"></li>
         <% end %>
@@ -18,14 +29,21 @@
 
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
-        <% items.each_with_index do |item, i| %>
+        <% rendered_items.each_with_index do |rendered, i| %>
+          <% active_class  = i == 0 ? 'active' : '' %>
+          <% even_class  = (i + 1).even? ? 'even' : 'odd' %>
+          <div class="item <%= active_class + ' ' + even_class %>">
+            <%= rendered.html_safe %>
+          </div>
+        <% end %>
+        <% items.each_with_index do |item, n| %>
+            <% i = n + rendered_count %>
             <% active_class  = i == 0 ? 'active' : '' %>
             <% even_class  = (i + 1).even? ? 'even' : 'odd' %>
             <div class="item <%= active_class + ' ' + even_class %>">
               <%= render partial: item_partial, locals: { item: item, i: i }%>
             </div>
         <% end %>
-
       </div>
 
       <!-- Controls -->
