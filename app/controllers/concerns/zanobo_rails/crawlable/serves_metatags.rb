@@ -41,8 +41,7 @@ module ZanoboRails::Crawlable::ServesMetatags
       defaults = {
       #  url: url_for(tagged_object)  # Not working for dynamic pages,
       # needs activemodel? Needs #model_name
-        url: CRAWLER_SETTINGS[:CANONICAL_PROTOCOL] + '://' +
-          CRAWLER_SETTINGS[:CANONICAL_DOMAIN] + request.path
+        url: "#{ZanoboRails::Crawlable.configuration.canonical_protocol}://#{ZanoboRails::Crawlable.configuration.canonical_domain}#{request.path}"
       }
 
       options.reverse_merge! defaults
@@ -194,23 +193,23 @@ module ZanoboRails::Crawlable::ServesMetatags
 
       # Types
       og_content_type = options[:type_og]
-      if og_content_type and Crawlable.content_types_for(:og).include? og_content_type
+      if og_content_type and ZanoboRails::Crawlable.content_types_for(:og).include? og_content_type
         return_values[:og][:type] = og_content_type
-      elsif type_provided = (general_type = options[:type] and Crawlable.general_content_types.include? general_type)
-        return_values[:og][:type] = Crawlable::Advisor.og_content_type_for(general_type)
+      elsif type_provided = (general_type = options[:type] and ZanoboRails::Crawlable.general_content_types.include? general_type)
+        return_values[:og][:type] = ZanoboRails::Crawlable::Advisor.og_content_type_for(general_type)
       else
         # Type is REQUIRED, we really should test for required values.
-        return_values[:og][:type] = Crawlable::Advisor.recommend(:content_type, :og).to_s
+        return_values[:og][:type] = ZanoboRails::Crawlable::Advisor.recommend(:content_type, :og).to_s
       end
 
       twitter_content_type = options[:type_twitter]
-      if twitter_content_type and Crawlable.content_types_for(:twitter).include? twitter_content_type
+      if twitter_content_type and ZanoboRails::Crawlable.content_types_for(:twitter).include? twitter_content_type
         return_values[:twitter][:type] = twitter_content_type
       elsif type_provided
-        return_values[:twitter][:type] = Crawlable.twitter_content_type_for(general_type)
+        return_values[:twitter][:type] = ZanoboRails::Crawlable.twitter_content_type_for(general_type)
       else
         # Type is REQUIRED
-         return_values[:twitter][:type] = Crawlable::Advisor.recommend(:content_type, :twitter).to_s
+         return_values[:twitter][:type] = ZanoboRails::Crawlable::Advisor.recommend(:content_type, :twitter).to_s
       end
 
       # URLS
